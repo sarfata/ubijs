@@ -11,7 +11,7 @@ app.get('/weather-station/', function(req, res) {
 
 	if (temperature != 0 && humidity != 0 && pressure != 0) {
 		console.log("Pusing to cosm: t=" + temperature + " h="+ humidity + " p=" + pressure);
-		var cosm_result = cosm_push(COSM_API_KEY, COSM_FEED_ID, temperature, humidity, pressure, res);
+		var cosm_result = cosm_push(config.cosm_api_key, config.cosm_feed_id, temperature, humidity, pressure, res);
 	}
 	else {
 		res.send("Wrong parameters.");
