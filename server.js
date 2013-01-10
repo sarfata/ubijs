@@ -5,7 +5,7 @@ var config = require('./settings');
 var app = express();
 
 app.get('/weather-station/', function(req, res) {
-	var temperature = req.query['value'].substring(5) / 10;
+	var temperature = req.query['temp'] / 10;
 	var humidity = req.query['humidity'];
 	var pressure = req.query['pressure'] / 10;
 
