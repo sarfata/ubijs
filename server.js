@@ -8,15 +8,22 @@ app.get('/weather-station/', function(req, res) {
 	var temperature = req.query['temp'] / 10;
 	var humidity = req.query['humidity'];
 	var pressure = req.query['pressure'] / 10;
+	var mac = req.query['mac'];
 
-	if (temperature != 0 && humidity != 0 && pressure != 0) {
-		console.log("Pusing to cosm: t=" + temperature + " h="+ humidity + " p=" + pressure);
-		var cosm_result = cosm_push(config.cosm_api_key, config.cosm_feed_id, temperature, humidity, pressure, res);
+	if (mac in config) {
+		if (temperature != 0 && humidity != 0 && pressure != 0) {
+			console.log(new Date() + " - Pusing to cosm: t=" + temperature + " h="+ humidity + " p=" + pressure);
+			var cosm_result = cosm_push(config[mac].cosm_api_key, config[mac].cosm_feed_id, temperature, humidity, pressure, res);
+		}
+		else {
+			res.send("Wrong parameters.");
+			console.log("Wrong params");
+			console.log(JSON.stringify(req.query));
+		}
 	}
 	else {
-		res.send("Wrong parameters.");
-		console.log("Wrong params");
-		console.log(JSON.stringify(req.query));
+		console.log("No configuration for mac: " + mac);
+		res.send("missing config");
 	}
 });
 
